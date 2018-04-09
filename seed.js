@@ -8,7 +8,8 @@ var data = [
         email: "tom@qq.com",
         phone: "111-222-333",
         gender: "Male",
-        birth: "01-01-1900"
+        birth: "01-01-1900",
+        languages: ["English", "Spanish"]
     },
     {
         name: "Jerry",
@@ -16,7 +17,8 @@ var data = [
         email: "jerry@qq.com",
         phone: "444-555-666",
         gender: "Male",
-        birth: "01-01-1990"
+        birth: "01-01-1990",
+        languages: ["LanZhouHua", "SiChuanHua"]
     },
     {
         name: "Emma Waston",
@@ -24,7 +26,8 @@ var data = [
         email: "emma@qq.com",
         phone: "777-888-999",
         gender: "Female",
-        birth: "4-15-1990"
+        birth: "04-15-1990",
+        languages: ["Chinese"]
     }
 ];
 

@@ -1,18 +1,21 @@
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
-const views = require("koa-views");
-const seedDB = require("./seed");
+const staticServe = require('koa-static');
+const views = require('koa-views');
+const seedDB = require('./seed');
+
+// seed DB
+seedDB().catch(error => console.log(erro.stack));
 
 // require routes
-var indexRoutes = require("./routes/index");
+var indexRoutes = require('./routes/index');
+var userRoutes = require('./routes/user');
 
 // app config
 const app = new Koa();
 app.use(bodyParser());
-app.use(views("./views", {map: {html: 'ejs'}}));
-
-// seed DB
-seedDB().catch(error => console.log(erro.stack));
+app.use(views('./views', {map: {html: 'ejs'}}));
+app.use(staticServe('./static'))
 
 // log request URL:
 app.use(async (ctx, next) => {
@@ -20,14 +23,10 @@ app.use(async (ctx, next) => {
     await next();
 });
 
-// add router middleware:
+// add routes:
 app.use(indexRoutes.routes());
-  
-// response
+app.use(userRoutes.routes());
 
-app.use(async ctx => {
-ctx.body = 'Hello World';
-});
   
 app.listen(3000);
 

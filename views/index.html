@@ -1,11 +1,62 @@
-<h1>Hello World!!!</h1>
+<% include partials/header.html %>
 
-<% users.forEach( user => { %>
-<ul>
-    <li><%= user.name  %></li>
-    <li><%= user.email %></li>
-    <li><%= user.phone %></li>
-    <li><%= user.gender %></li>
-    <li><%= user.birth %></li>
-</ul>
-<% }); %>
+<div class="container">
+    <header class="jumbotron">
+        <div class="container>">
+            <h1>welcome to Slangy</h1>
+            <p>Learn all kinds of language with native speaker from all over the world</p>
+        </div>
+    </header>
+    <div class="row text-center">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <caption>List of users</caption>
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Birth</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Languages</th>
+                    </tr>
+                </thead>
+                <tbody id="user-list">
+                    <tr v-for="user in users">
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.birth }}</td>
+                        <td>{{ user.gender }}</td>
+                        <td>{{ user.languages }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- <script src="/javascript/index.js"></script> -->
+<script>
+new Vue({
+    el: '#user-list',
+    data: {
+        users: []
+    },
+    created: function () {
+        this.init();
+    },
+    methods: {
+        init: function () {
+            // GET /someUrl
+            this.$http.get('/user').then(response => {
+                // get body data
+                this.users = response.body;
+            }, response => {
+                // error callback
+                console.log(response);
+            });
+        }
+    }
+});
+</script>
+
+<% include partials/footer.html %>
