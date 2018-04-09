@@ -9,9 +9,12 @@
   "author": "James",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^2.5.8",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.4.0",
+    "koa-views": "^6.1.4",
+    "mongoose": "^5.0.13",
     "nodemon": "^1.17.3"
   }
 }
