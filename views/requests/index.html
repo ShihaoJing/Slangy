@@ -1,4 +1,4 @@
-<% include partials/header.html %>
+<% include ../partials/header.html %>
 
 <div class="container">
     <header class="jumbotron">
@@ -10,25 +10,19 @@
     <div class="row text-center">
         <div class="col-md-12">
             <table class="table table-striped">
-                <caption>List of users</caption>
+                <caption>List of requests</caption>
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Birth</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">Languages</th>
+                        <th scope="col">Sender</th>
+                        <th scope="col">Receiver</th>
                     </tr>
                 </thead>
-                <tbody id="user-list">
-                    <tr v-for="user in users">
-                        <td>{{ user._id }}</td>
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.birth }}</td>
-                        <td>{{ user.gender }}</td>
-                        <td>{{ user.languages }}</td>
+                <tbody id="request-list">
+                    <tr v-for="request in requests">
+                        <td>{{ request._id }}</td>
+                        <td>{{ request.sender.username }}</td>
+                        <td>{{ request.receiver.username }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -39,9 +33,9 @@
 <!-- <script src="/javascript/index.js"></script> -->
 <script>
 new Vue({
-    el: '#user-list',
+    el: '#request-list',
     data: {
-        users: []
+        requests: []
     },
     created: function () {
         this.init();
@@ -49,9 +43,9 @@ new Vue({
     methods: {
         init: function () {
             // GET /someUrl
-            this.$http.get('/user').then(response => {
+            this.$http.get('/requests').then(response => {
                 // get body data
-                this.users = response.body;
+                this.requests = response.body;
             }, response => {
                 // error callback
                 console.log(response);
@@ -61,4 +55,4 @@ new Vue({
 });
 </script>
 
-<% include partials/footer.html %>
+<% include ../partials/footer.html %>

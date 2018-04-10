@@ -1,8 +1,16 @@
-const router = require('koa-router')(); // required is a function
-const User = require('../models/user');
+const express = require("express");
+const router  = express.Router({mergeParams: true});
+const Request = require('../models/request');
+const User = require("../models/user");
 
-router.get('/user', async (ctx, next) => {
-    ctx.body = await User.find();
+router.get('/user', function (req, res) {
+    User.find({}, function (err, users) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(users);
+        }
+    })
 });
 
 module.exports = router;

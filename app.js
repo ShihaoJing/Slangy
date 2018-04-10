@@ -1,33 +1,26 @@
-const Koa = require('koa');
-const bodyParser = require('koa-bodyparser');
-const staticServe = require('koa-static');
-const views = require('koa-views');
+const express = require('express');
+const ejs = require('ejs');
+const bodyParser = require('body-parser');
 const seedDB = require('./seed');
 
 // seed DB
-seedDB().catch(error => console.log(erro.stack));
 
 // require routes
 var indexRoutes = require('./routes/index');
 var userRoutes = require('./routes/user');
+var requestRoutes = require('./routes/request');
 
 // app config
-const app = new Koa();
-app.use(bodyParser());
-app.use(views('./views', {map: {html: 'ejs'}}));
-app.use(staticServe('./static'))
-
-// log request URL:
-app.use(async (ctx, next) => {
-    console.log(new Date().toLocaleTimeString() + ' --- ' + ctx.request.method + ' ' + ctx.request.url);
-    await next();
-});
+const app = new express();
+app.set('view engine', 'html');
+app.engine('html', ejs.renderFile);
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static('./static'))
 
 // add routes:
-app.use(indexRoutes.routes());
-app.use(userRoutes.routes());
+app.use(indexRoutes);
+app.use(userRoutes);
+app.use(requestRoutes);
 
   
-app.listen(3000);
-
-console.log("Slangy started...");
+app.listen(3000, () => console.log("Slangy started..."));

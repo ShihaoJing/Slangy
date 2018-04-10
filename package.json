@@ -9,7 +9,9 @@
   "author": "James",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "ejs": "^2.5.8",
+    "express": "^4.16.3",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.4.0",
