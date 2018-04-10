@@ -3,7 +3,8 @@ const User = require("./models/user");
 
 var data = [
     {
-        name: "Tom",
+        username: "Tom",
+        fullname: "Tom Hanks",
         password: "123",
         email: "tom@qq.com",
         phone: "111-222-333",
@@ -12,7 +13,8 @@ var data = [
         languages: ["English", "Spanish"]
     },
     {
-        name: "Jerry",
+        username: "Jerry",
+        fullname: "Jerry Jhons",
         password: "123",
         email: "jerry@qq.com",
         phone: "444-555-666",
@@ -21,7 +23,8 @@ var data = [
         languages: ["LanZhouHua", "SiChuanHua"]
     },
     {
-        name: "Emma Waston",
+        username: "Emma",
+        fullname: "Emma Watson",
         password: "123",
         email: "emma@qq.com",
         phone: "777-888-999",
@@ -31,13 +34,16 @@ var data = [
     }
 ];
 
-async function seedDB() {
+function seedDB() {
     //Remove all Users
-    await User.remove({});
-    await mongoose.connection.dropDatabase();
-    for (var i = 0; i < data.length; i++) {
-        await User.create(data[i]);
-    }
+    User.remove({})
+        .then(() => {
+            return User.collection.insert(data);
+        })
+        .then((users) => {
+            console.log(users);
+        })
+        .catch(err => console.log(err));
 }
 
 module.exports = seedDB;

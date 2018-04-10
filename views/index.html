@@ -49,7 +49,7 @@ new Vue({
     methods: {
         init: function () {
             // GET /someUrl
-            this.$http.get('/user').then(response => {
+            this.$http.get('/users').then(response => {
                 // get body data
                 this.users = response.body;
             }, response => {

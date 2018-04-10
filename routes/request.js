@@ -35,14 +35,16 @@ router.post('/requests', function (req, res) {
         User.findById(receiver_id),
     ]).then( ([sender, receiver]) => {
         var newRequest = {
-            sender: {
+            fu: {
                 id: sender._id,
                 username: sender.name
             },
-            receiver: {
+            tu: {
                 id: receiver._id,
                 username: receiver.name
-            }
+            },
+            rt: 'VideoInvitation',
+            status: 'Pending'
         };
         return Request.create(newRequest);
     }).then((newRequest) => {
