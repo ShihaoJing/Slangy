@@ -19,16 +19,20 @@
                         <th scope="col">Birth</th>
                         <th scope="col">Gender</th>
                         <th scope="col">Languages</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody id="user-list">
                     <tr v-for="user in users">
                         <td>{{ user._id }}</td>
-                        <td>{{ user.name }}</td>
+                        <td>{{ user.fullname }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.birth }}</td>
                         <td>{{ user.gender }}</td>
                         <td>{{ user.languages }}</td>
+                        <td>
+                            <button class="btn btn-primary"  v-on:click="invite(user._id)">Invite</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -41,7 +45,9 @@
 new Vue({
     el: '#user-list',
     data: {
-        users: []
+        users: [],
+        tu: '',
+        fu: '5acce5bb1d6ea339790ee268'
     },
     created: function () {
         this.init();
@@ -49,13 +55,16 @@ new Vue({
     methods: {
         init: function () {
             // GET /someUrl
-            this.$http.get('/users').then(response => {
+            this.$http.get('/api/users').then(response => {
                 // get body data
                 this.users = response.body;
             }, response => {
                 // error callback
                 console.log(response);
             });
+        },
+        invite: function (id) {
+            alert(id);
         }
     }
 });

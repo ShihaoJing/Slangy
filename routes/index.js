@@ -2,7 +2,11 @@ const express = require("express");
 const passport = require('passport');
 const router  = express.Router({mergeParams: true});
 const User = require("../models/user");
+const Request = require("../models/request");
 
+/**
+ * Index Views
+ */
 router.get('/landing', function (req, res) {
     res.render('landing')
 });
@@ -41,5 +45,88 @@ router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/login');
 });
+
+/**
+ * User Views
+ */
+
+router.get('/api/users', function (req, res) {
+    User.find({}, function (err, users) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(users);
+        }
+    })
+});
+
+router.get('/users/:id', (req, res) => {
+    User.findById(req.params.id, (err, user) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('users/show', {user: user});
+        }
+    })
+});
+
+/**
+ * Request Views
+ */
+
+// get all requests
+router.get('/api/requests', function (req, res) {
+
+});
+
+// create a new request
+router.post('/api/requests', function (req, res) {
+    var fu_id = req.body.sender_id;
+    console.log(fu_id);
+    var tu_id = req.body.receiver_id;
+    console.log(tu_id);
+
+    Promise.all([
+        User.findById(fu_id),
+        User.findById(tu_id),
+    ]).then( ([sender, receiver]) => {
+        var newRequest = {
+            fu: {
+                id: sender._id,
+                username: sender.username
+            },
+            tu: {
+                id: receiver._id,
+                username: receiver.username
+            },
+            rt: 'VideoInvitation',
+            status: 'Pending'
+        };
+        return Request.create(newRequest);
+    }).then((newRequest) => {
+        res.send("success");
+    }).catch( err => {
+        console.log(err);
+    });
+});
+
+// Show all requests of a user
+router.get('/api/users/:id/requests', function (req, res) {
+    Request.find().then(allRequests => {
+        var requests = [];
+        allRequests.forEach(request => {
+            if (request.fu.id.equals(req.params.id)) {
+                requests.push(request);
+            }
+        });
+        res.send(requests);
+    }).catch(err => console.log(err));
+});
+
+router.get('/requests', function (req, res) {
+    res.render('requests/index.html');
+});
+
+
 
 module.exports = router;

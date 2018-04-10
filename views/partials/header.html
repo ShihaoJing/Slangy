@@ -31,8 +31,11 @@
                     <a class="nav-link" href="/register">Sign Up</a>
                 </li>
                 <% } else { %>
+                <li class="nav-item">
+                        <a class="nav-link" href="/users/<%= user._id %>"> Signed In As <%= user.username %></a>
+                </li>
                 <li class="nav-item active">
-                    <a class="nav-link">Signed In As <%= user.username %></a>
+                    <a class="nav-link" href="/requests">My Invitations</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>

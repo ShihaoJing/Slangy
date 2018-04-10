@@ -43,8 +43,5 @@ app.use(function(req, res, next){
 
 // add routes:
 app.use(indexRoutes);
-app.use(userRoutes);
-app.use(requestRoutes);
 
-  
 app.listen(3000, () => console.log("Slangy started..."));

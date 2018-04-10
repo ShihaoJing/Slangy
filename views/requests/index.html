@@ -1,12 +1,6 @@
 <% include ../partials/header.html %>
 
 <div class="container">
-    <header class="jumbotron">
-        <div class="container>">
-            <h1>welcome to Slangy</h1>
-            <p>Learn language with native speaker from all over the world</p>
-        </div>
-    </header>
     <div class="row text-center">
         <div class="col-md-12">
             <table class="table table-striped">
@@ -21,8 +15,8 @@
                 <tbody id="request-list">
                     <tr v-for="request in requests">
                         <td>{{ request._id }}</td>
-                        <td>{{ request.sender.username }}</td>
-                        <td>{{ request.receiver.username }}</td>
+                        <td>{{ request.fu.username }}</td>
+                        <td>{{ request.tu.username }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -43,7 +37,7 @@ new Vue({
     methods: {
         init: function () {
             // GET /someUrl
-            this.$http.get('/requests').then(response => {
+            this.$http.get('/api/users/5acce5bb1d6ea339790ee268/requests').then(response => {
                 // get body data
                 this.requests = response.body;
             }, response => {

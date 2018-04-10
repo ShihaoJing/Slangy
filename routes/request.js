@@ -18,6 +18,20 @@ router.get('/requests', function (req, res) {
     });
 });
 
+// get all request
+router.get('/users/:id/requests', function (req, res) {
+    Request.find().then(allRequests => {
+        var requests = [];
+        allRequests.forEach(request => {
+            if (request.fu.id.equals(req.params.id)) {
+                requests.push(request);
+            }
+        });
+        res.send(requests);
+    }).catch(err => console.log(err));
+});
+
+
 // get request form
 router.get('/requests/new', function (req, res) {
     res.render('requests/new')
@@ -25,23 +39,23 @@ router.get('/requests/new', function (req, res) {
 
 // create a new request
 router.post('/requests', function (req, res) {
-    var sender_id = req.body.sender_id;
-    console.log(sender_id);
-    var receiver_id = req.body.receiver_id;
-    console.log(receiver_id);
+    var fu_id = req.body.sender_id;
+    console.log(fu_id);
+    var tu_id = req.body.receiver_id;
+    console.log(tu_id);
 
     Promise.all([
-        User.findById(sender_id),
-        User.findById(receiver_id),
+        User.findById(fu_id),
+        User.findById(tu_id),
     ]).then( ([sender, receiver]) => {
         var newRequest = {
             fu: {
                 id: sender._id,
-                username: sender.name
+                username: sender.username
             },
             tu: {
                 id: receiver._id,
-                username: receiver.name
+                username: receiver.username
             },
             rt: 'VideoInvitation',
             status: 'Pending'
