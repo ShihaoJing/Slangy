@@ -11,7 +11,8 @@ var userSchema = new mongoose.Schema({
     phone: String,
     gender: String,
     birth: String,
-    languages: [String]
+    languages: [String],
+    image: String
 });
 
 userSchema.plugin(passportLocalMongoose);

@@ -12,6 +12,11 @@ router.get('/landing', function (req, res) {
 });
 
 router.get('/', function (req, res) {
+    // User.find({
+    //     _id: {
+    //         $ne: req.user._id
+    //     }
+    // }).then( users => res.render('index', {users: users}) );
     User.find({}).then( users => res.render('index', {users: users}) );
 });
 
@@ -49,12 +54,32 @@ router.get('/logout', (req, res) => {
 /**
  * User Views
  */
-router.get('/profile', (req, res) => {
-    User.findById(req.user._id, (err, user) => {
+router.get('/profile/:id', (req, res) => {
+    User.findById(req.params.id, (err, user) => {
         if (err) {
             console.log(err);
         } else {
             res.render('profile', {user: user});
+        }
+    })
+});
+
+router.post('/profile/:id', (req, res) => {
+    User.findByIdAndUpdate(req.params.id, req.body.user, (err, updatedUser) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect('/profile/' + req.params.id);
+        }
+    })
+});
+
+router.get('/profile/:id/edit', (req, res) => {
+    User.findById(req.params.id, (err, user) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('profile_form', {user: user});
         }
     })
 });

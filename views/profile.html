@@ -2,11 +2,13 @@
 
 <div class="container">
     <div class="row text-center">
-        <div class="col-md-12">
+        <div class="col-md-3">
+            <img src="<%= user.image %>" class="img-thumbnail">
+        </div>
+        <div class="col-md-9">
             <table class="table table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Id</th>
                         <th scope="col">Username</th>
                         <th scope="col">Full Name</th>
                         <th scope="col">Email</th>
@@ -17,7 +19,6 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><%= user._id       %></td>
                         <td><%= user.username       %></td>
                         <td><%= user.fullname      %></td>
                         <td><%= user.email     %></td>
@@ -27,6 +28,11 @@
                     </tr>
                 </tbody>
             </table>
+            <form action="/requests" method="POST">
+                <input type="text" name="tu" value="<%= user._id %>" style="display: none;">
+                <button class="btn btn-primary">Invite</button>
+            </form>
+            <a class="btn btn-warning" href="/profile/<%= user._id %>/edit">Edit</a>
         </div>
     </div>
 </div>

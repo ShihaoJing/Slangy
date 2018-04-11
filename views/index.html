@@ -20,6 +20,7 @@
                         <th scope="col">Gender</th>
                         <th scope="col">Languages</th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody id="user-list">
@@ -32,8 +33,11 @@
                         <td><%= user.gender    %></td>
                         <td><%= user.languages %></td>
                         <td>
+                            <a class="btn btn-info" href="/profile/<%= user._id %>">Info</button>
+                        </td>
+                        <td>
                             <form action="/requests" method="POST">
-                                <input type="text" name="tu" value="<%= user._id%>" style="display: none;">
+                                <input type="text" name="tu" value="<%= user._id %>" style="display: none;">
                                 <button class="btn btn-primary">Invite</button>
                             </form>
                         </td>

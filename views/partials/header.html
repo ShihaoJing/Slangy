@@ -23,16 +23,16 @@
             </li>
             </ul>
             <ul class="navbar-nav">
-                <% if (!user) { %>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/register">Sign Up</a>
                 </li>
+                <% if (!login_user) { %>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
                 <% } else { %>
                 <li class="nav-item">
-                        <a class="nav-link" href="/profile"> Signed In As <%= user.username %></a>
+                        <a class="nav-link" href="/profile/<%= login_user._id %>"> Signed In As <%= login_user.username %></a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/requests">My Invitations</a>
