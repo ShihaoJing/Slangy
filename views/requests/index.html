@@ -10,14 +10,20 @@
                         <th scope="col">Id</th>
                         <th scope="col">Sender</th>
                         <th scope="col">Receiver</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody id="request-list">
-                    <tr v-for="request in requests">
-                        <td>{{ request._id }}</td>
-                        <td>{{ request.fu.username }}</td>
-                        <td>{{ request.tu.username }}</td>
+                    <% requests.forEach(function (request) { %>
+                    <tr>
+                        <td><%= request._id         %></td>
+                        <td><%= request.fu.username %></td>
+                        <td><%= request.tu.username %></td>
+                        <td><%= request.rt          %></td>
+                        <td><%= request.status      %></td>
                     </tr>
+                    <% }); %>
                 </tbody>
             </table>
         </div>
@@ -25,28 +31,5 @@
 </div>
 
 <!-- <script src="/javascript/index.js"></script> -->
-<script>
-new Vue({
-    el: '#request-list',
-    data: {
-        requests: []
-    },
-    created: function () {
-        this.init();
-    },
-    methods: {
-        init: function () {
-            // GET /someUrl
-            this.$http.get('/api/users/5acce5bb1d6ea339790ee268/requests').then(response => {
-                // get body data
-                this.requests = response.body;
-            }, response => {
-                // error callback
-                console.log(response);
-            });
-        }
-    }
-});
-</script>
 
 <% include ../partials/footer.html %>

@@ -19,6 +19,7 @@ var requestRoutes = require('./routes/request');
 const app = new express();
 app.set('view engine', 'html');
 app.engine('html', ejs.renderFile);
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('./static'));
 app.use(require('express-session')({
@@ -35,11 +36,26 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(function(req, res, next) {
+    var fakeUser = {
+        _id: "5acce139fa2bdb377b9c6275",
+        username: "Emma",
+        fullname: "Emma Watson",
+        password: "123",
+        email: "emma@qq.com",
+        phone: "777-888-999",
+        gender: "Female",
+        birth: "04-15-1990",
+        languages: ["Chinese"]
+    };
+    req.user = fakeUser;
+    next();  
+});
 
-app.use(function(req, res, next){
-    res.locals.user = req.user;
-    next();
-})
+ app.use(function(req, res, next){
+     res.locals.user = req.user;
+     next();
+ });
 
 // add routes:
 app.use(indexRoutes);

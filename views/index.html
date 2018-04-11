@@ -23,17 +23,19 @@
                     </tr>
                 </thead>
                 <tbody id="user-list">
-                    <tr v-for="user in users">
-                        <td>{{ user._id }}</td>
-                        <td>{{ user.fullname }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.birth }}</td>
-                        <td>{{ user.gender }}</td>
-                        <td>{{ user.languages }}</td>
+                    <% users.forEach(function (user) { %>
+                    <tr>
+                        <td><%= user._id       %></td>
+                        <td><%= user.fullname  %></td>
+                        <td><%= user.email     %></td>
+                        <td><%= user.birth     %></td>
+                        <td><%= user.gender    %></td>
+                        <td><%= user.languages %></td>
                         <td>
-                            <button class="btn btn-primary"  v-on:click="invite(user._id)">Invite</button>
+                            <button class="btn btn-primary">Invite</button>
                         </td>
                     </tr>
+                    <% }); %>
                 </tbody>
             </table>
         </div>
@@ -41,33 +43,5 @@
 </div>
 
 <!-- <script src="/javascript/index.js"></script> -->
-<script>
-new Vue({
-    el: '#user-list',
-    data: {
-        users: [],
-        tu: '',
-        fu: '5acce5bb1d6ea339790ee268'
-    },
-    created: function () {
-        this.init();
-    },
-    methods: {
-        init: function () {
-            // GET /someUrl
-            this.$http.get('/api/users').then(response => {
-                // get body data
-                this.users = response.body;
-            }, response => {
-                // error callback
-                console.log(response);
-            });
-        },
-        invite: function (id) {
-            alert(id);
-        }
-    }
-});
-</script>
 
 <% include partials/footer.html %>

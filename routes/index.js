@@ -12,7 +12,7 @@ router.get('/landing', function (req, res) {
 });
 
 router.get('/', function (req, res) {
-    res.render('index');
+    User.find({}).then( users => res.render('index', {users: users}) );
 });
 
 router.get('/register', (req, res) => {
@@ -81,23 +81,22 @@ router.get('/api/requests', function (req, res) {
 
 // create a new request
 router.post('/api/requests', function (req, res) {
-    var fu_id = req.body.sender_id;
-    console.log(fu_id);
-    var tu_id = req.body.receiver_id;
-    console.log(tu_id);
+    var fu_id = req.user._id;
+    var tu_id = req.body.tu;
+    console.log(req.body);
 
     Promise.all([
         User.findById(fu_id),
         User.findById(tu_id),
-    ]).then( ([sender, receiver]) => {
+    ]).then( ([fu, tu]) => {
         var newRequest = {
             fu: {
-                id: sender._id,
-                username: sender.username
+                id: fu._id,
+                username: fu.username
             },
             tu: {
-                id: receiver._id,
-                username: receiver.username
+                id: tu._id,
+                username: tu.username
             },
             rt: 'VideoInvitation',
             status: 'Pending'
@@ -111,7 +110,7 @@ router.post('/api/requests', function (req, res) {
 });
 
 // Show all requests of a user
-router.get('/api/users/:id/requests', function (req, res) {
+router.get('/users/:id/requests', function (req, res) {
     Request.find().then(allRequests => {
         var requests = [];
         allRequests.forEach(request => {
@@ -119,12 +118,8 @@ router.get('/api/users/:id/requests', function (req, res) {
                 requests.push(request);
             }
         });
-        res.send(requests);
+        res.render('requests/index', {requests: requests});
     }).catch(err => console.log(err));
-});
-
-router.get('/requests', function (req, res) {
-    res.render('requests/index.html');
 });
 
 
