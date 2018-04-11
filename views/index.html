@@ -32,7 +32,10 @@
                         <td><%= user.gender    %></td>
                         <td><%= user.languages %></td>
                         <td>
-                            <button class="btn btn-primary">Invite</button>
+                            <form action="/requests" method="POST">
+                                <input type="text" name="tu" value="<%= user._id%>" style="display: none;">
+                                <button class="btn btn-primary">Invite</button>
+                            </form>
                         </td>
                     </tr>
                     <% }); %>

@@ -49,23 +49,12 @@ router.get('/logout', (req, res) => {
 /**
  * User Views
  */
-
-router.get('/api/users', function (req, res) {
-    User.find({}, function (err, users) {
+router.get('/profile', (req, res) => {
+    User.findById(req.user._id, (err, user) => {
         if (err) {
             console.log(err);
         } else {
-            res.send(users);
-        }
-    })
-});
-
-router.get('/users/:id', (req, res) => {
-    User.findById(req.params.id, (err, user) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render('users/show', {user: user});
+            res.render('profile', {user: user});
         }
     })
 });
@@ -74,16 +63,10 @@ router.get('/users/:id', (req, res) => {
  * Request Views
  */
 
-// get all requests
-router.get('/api/requests', function (req, res) {
-
-});
-
 // create a new request
-router.post('/api/requests', function (req, res) {
+router.post('/requests', function (req, res) {
     var fu_id = req.user._id;
     var tu_id = req.body.tu;
-    console.log(req.body);
 
     Promise.all([
         User.findById(fu_id),
@@ -103,22 +86,26 @@ router.post('/api/requests', function (req, res) {
         };
         return Request.create(newRequest);
     }).then((newRequest) => {
-        res.send("success");
+        res.redirect("/requests");
     }).catch( err => {
         console.log(err);
     });
 });
 
+router.post('/requests/:id/edit', function (req, res) {
+    Request.findById(req.params.id).then(
+        request => {
+            request.status = req.body.status;
+            request.save();
+            res.redirect('/requests');
+        }
+    );
+});
+
 // Show all requests of a user
-router.get('/users/:id/requests', function (req, res) {
-    Request.find().then(allRequests => {
-        var requests = [];
-        allRequests.forEach(request => {
-            if (request.fu.id.equals(req.params.id)) {
-                requests.push(request);
-            }
-        });
-        res.render('requests/index', {requests: requests});
+router.get('/requests', function (req, res) {
+    Request.find({'fu.id': req.user._id}).then(requests => {
+        res.render('requests', {requests: requests});
     }).catch(err => console.log(err));
 });
 
