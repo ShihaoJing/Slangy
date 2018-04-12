@@ -1,0 +1,31 @@
+<% include partials/header.html %>
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <caption>List of connections</caption>
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">User1</th>
+                        <th scope="col">User2</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="user-list">
+                    <% relationships.forEach(function (relationship) { %>
+                    <tr>
+                        <td><%= relationship.user_id[0] %></td>
+                        <td><%= relationship.user_id[1]  %></td>
+                        <td><%= relationship.type  %></td>
+                        <td><%= relationship.status %></td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<% include partials/footer.html %>

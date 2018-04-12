@@ -19,7 +19,16 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/posts">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/users">Users<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/posts">Posts<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/posts/new">Make Post<span class="sr-only">(current)</span></a>
             </li>
             </ul>
             <ul class="navbar-nav">
@@ -31,11 +40,14 @@
                     <a class="nav-link" href="/login">Login</a>
                 </li>
                 <% } else { %>
-                <li class="nav-item">
-                        <a class="nav-link" href="/profile/<%= login_user._id %>"> Signed In As <%= login_user.username %></a>
+                <li class="nav-item active">
+                        <a class="nav-link" href="/users/<%= login_user._id %>/profile"> Signed In As <%= login_user.username %></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/requests">My Invitations</a>
+                    <a class="nav-link" href="/users/<%= login_user._id %>/relationships">Connections</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/users/<%= login_user._id %>/posts">Posts</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>

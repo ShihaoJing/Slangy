@@ -1,47 +1,37 @@
 <% include partials/header.html %>
 
 <div class="container">
-    <header class="jumbotron">
-        <div class="container>">
-            <h1>welcome to Slangy</h1>
-            <p>Learn language with native speaker from all over the world</p>
-        </div>
-    </header>
     <div class="row text-center">
         <div class="col-md-12">
-            <% if (locals.users) { %>
             <table class="table table-striped">
-                <caption>List of users</caption>
+                <caption>List of applied posts</caption>
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Birth</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">Languages</th>
-                        <th scope="col"></th>
+                        <th scope="col">From</th>
+                        <th scope="col">Applicants</th>
+                        <th scope="col">Teach</th>
+                        <th scope="col">Learn</th>
+                        <th scope="col">Prefered Topic</th>
+                        <th scope="col">Comment</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody id="user-list">
-                    <% users.forEach(function (user) { %>
+                    <% applied_posts.forEach(function (post) { %>
                     <tr>
-                        <td><%= user._id       %></td>
-                        <td><%= user.fullname  %></td>
-                        <td><%= user.email     %></td>
-                        <td><%= user.birth     %></td>
-                        <td><%= user.gender    %></td>
-                        <td><%= user.languages %></td>
-                        <td>
-                            <a class="btn btn-info" href="/users/<%= user._id %>/profile">Info</button>
-                        </td>
+                        <td><%= post.fu_username %></td>
+                        <td><%= post.applicants  %></td>
+                        <td><%= post.teach_lang  %></td>
+                        <td><%= post.learn_lang  %></td>
+                        <td><%= post.topics      %></td>
+                        <td><%= post.comment     %></td>
+                        <td><%= post.status %></td>
                     </tr>
                     <% }); %>
                 </tbody>
             </table>
-            <% } else { %>
             <table class="table table-striped">
-                <caption>List of posts</caption>
+                <caption>List of my posts</caption>
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">From</th>
@@ -52,10 +42,11 @@
                         <th scope="col">Comment</th>
                         <th scope="col">Status</th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody id="user-list">
-                    <% posts.forEach(function (post) { %>
+                    <% my_posts.forEach(function (post) { %>
                     <tr>
                         <td><%= post.fu_username %></td>
                         <td><%= post.applicants  %></td>
@@ -65,19 +56,21 @@
                         <td><%= post.comment     %></td>
                         <td><%= post.status %></td>
                         <td>
-                            <form action="/posts/<%= post._id %>/join", method="POST">
-                                <button class="btn btn-primary">Join</button>
+                            <a class="btn btn-primary" href="/posts/<%= post._id %>/edit">Edit</a>
+                        </td>
+                        <td>
+                            <form action="/relationships" method="POST">
+                                <input type="text" name="rs[user_id]" value="<%= post.fu_id %>" style="display: none;">
+                                <input type="text" name="rs[user_id]" value="<%= post.applicants[0] %>" style="display: none;">
+                                <button class="btn btn-primary">Approve</button>
                             </form>
                         </td>
                     </tr>
                     <% }); %>
                 </tbody>
             </table>
-            <% } %>
         </div>
     </div>
 </div>
-
-<!-- <script src="/javascript/index.js"></script> -->
 
 <% include partials/footer.html %>

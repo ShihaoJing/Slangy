@@ -28,11 +28,7 @@
                     </tr>
                 </tbody>
             </table>
-            <form action="/requests" method="POST">
-                <input type="text" name="tu" value="<%= user._id %>" style="display: none;">
-                <button class="btn btn-primary">Invite</button>
-            </form>
-            <a class="btn btn-warning" href="/profile/<%= user._id %>/edit">Edit</a>
+            <a class="btn btn-warning" href="/users/<%= user._id %>/profile/edit">Edit</a>
         </div>
     </div>
 </div>

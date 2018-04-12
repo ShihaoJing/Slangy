@@ -12,9 +12,6 @@ const User = require('./models/user');
 
 // require routes
 var indexRoutes = require('./routes/index');
-var userRoutes = require('./routes/user');
-var requestRoutes = require('./routes/request');
-
 // app config
 const app = new express();
 app.set('view engine', 'html');
@@ -36,7 +33,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use(function(req, res, next) {
+function fakeLogin(req, res, next) {
     var fakeUser = {
         _id: "5acce139fa2bdb377b9c6275",
         username: "Emma",
@@ -50,7 +47,9 @@ app.use(function(req, res, next) {
     };
     req.user = fakeUser;
     next();  
-});
+}
+
+app.use(fakeLogin);
 
  app.use(function(req, res, next){
      res.locals.login_user = req.user;

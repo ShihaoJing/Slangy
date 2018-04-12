@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/slangy");
-
 const passportLocalMongoose = require("passport-local-mongoose")
 
 var userSchema = new mongoose.Schema({
